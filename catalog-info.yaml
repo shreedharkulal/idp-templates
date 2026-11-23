@@ -1,0 +1,17 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: pwc-idp
+  title: PWC Internal Developer Platform
+  description: Internal Developer Platform built with Backstage to provide a centralized portal for developers, CI/CD workflows, Kubernetes services, and deployment documentation.
+  tags:
+    - idp
+    - backstage
+    - developer-portal
+    - devops
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+spec:
+  type: service
+  lifecycle: experimental
+  owner: guests
