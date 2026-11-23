@@ -58,7 +58,7 @@ spec:
       name: Create GitHub repository
       action: publish:github
       input:
-        repoUrl: github.com?owner=YOUR_GITHUB_OWNER&repo=${{ parameters.name }}
+        repoUrl: github.com?owner=shreedharkulal&repo=${{ parameters.name }}
         description: ${{ parameters.description }}
         defaultBranch: main
         repoVisibility: private
