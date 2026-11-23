@@ -1,0 +1,69 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+
+metadata:
+  name: nodejs-service
+  title: Node.js Microservice
+  description: Create a Node.js service for Azure AKS
+
+spec:
+  owner: platform-team
+  type: service
+
+  parameters:
+    - title: Service details
+      required:
+        - name
+        - owner
+        - environment
+      properties:
+        name:
+          title: Service name
+          type: string
+          pattern: "^[a-z][a-z0-9-]*$"
+          description: "Example: order-service"
+
+        owner:
+          title: Owner
+          type: string
+          default: platform-team
+
+        environment:
+          title: Environment
+          type: string
+          enum:
+            - dev
+            - uat
+            - prod
+          default: dev
+
+        description:
+          title: Service description
+          type: string
+          default: New microservice
+
+  steps:
+    - id: fetch
+      name: Generate service files
+      action: fetch:template
+      input:
+        url: ./skeleton
+        values:
+          name: ${{ parameters.name }}
+          owner: ${{ parameters.owner }}
+          environment: ${{ parameters.environment }}
+          description: ${{ parameters.description }}
+
+    - id: publish
+      name: Create GitHub repository
+      action: publish:github
+      input:
+        repoUrl: github.com?owner=YOUR_GITHUB_OWNER&repo=${{ parameters.name }}
+        description: ${{ parameters.description }}
+        defaultBranch: main
+        repoVisibility: private
+
+  output:
+    links:
+      - title: Open new repository
+        url: ${{ steps.publish.output.remoteUrl }}
